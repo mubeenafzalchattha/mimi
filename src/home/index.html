@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'self';" />
+  <title>Mimi</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <header class="titlebar"></header>
+
+  <main>
+    <section class="hero">
+      <canvas id="logo" width="120" height="120"></canvas>
+      <div class="hero-text">
+        <h1>Mimi</h1>
+        <p class="tagline">your task list got paws 🐾</p>
+        <p class="blurb">Mimi keeps an eye on you. Every reminder gets a cat: it walks onto your screen
+          before the deadline, meows until the job is done, and only leaves when you tick it off.
+          You cannot ignore that pending task forever now.</p>
+        <div class="hero-actions">
+          <button id="summon" class="btn primary">Summon a test cat</button>
+          <button id="refresh" class="btn">Check reminders now</button>
+        </div>
+      </div>
+      <div class="status-card">
+        <div class="status-line"><span id="dot" class="dot"></span><span id="statusText">Checking…</span></div>
+        <div id="petList" class="pet-list"></div>
+        <button id="fixPerms" class="btn small hidden">Open Privacy settings</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Choose your pet</h2>
+        <p>Your pick takes the most urgent task. Every extra task gets a random cat.</p>
+      </div>
+      <div id="gallery" class="gallery"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Habits</h2><p>How pushy should they be?</p></div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label"><strong>Cats arrive</strong><span>before the deadline</span></div>
+          <div class="chips" id="lead"></div>
+        </div>
+        <div class="row">
+          <div class="row-label"><strong>Size</strong><span>pixels per pixel</span></div>
+          <div class="chips" id="scale"></div>
+        </div>
+        <div class="row">
+          <div class="row-label"><strong>Meowing</strong><span>real meows, purrs and chirps</span></div>
+          <div class="inline">
+            <label class="switch"><input type="checkbox" id="sound" /><span></span></label>
+            <input type="range" id="volume" min="0" max="100" step="5" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label"><strong>Clicking a cat</strong><span>what a click on its body does</span></div>
+          <div class="chips" id="clickMode"></div>
+        </div>
+        <div class="row">
+          <div class="row-label"><strong>Start with the Mac</strong><span>so the cats are always on duty</span></div>
+          <div class="inline"><label class="switch"><input type="checkbox" id="login" /><span></span></label></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Lists to watch</h2><p>Nothing ticked means every list in Reminders.</p></div>
+      <div id="lists" class="lists"></div>
+    </section>
+
+    <footer>
+      <span id="version"></span>
+      <button id="quit" class="btn ghost">Quit Mimi</button>
+    </footer>
+  </main>
+
+  <script src="../renderer/sprites.js"></script>
+  <script src="../renderer/audio.js"></script>
+  <script src="../renderer/cat.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>

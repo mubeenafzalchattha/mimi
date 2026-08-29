@@ -1,0 +1,49 @@
+{
+  "name": "mimi",
+  "version": "0.1.0",
+  "description": "Your task list got paws. Pixel cats walk onto your Mac before an Apple Reminders deadline and refuse to leave until you finish.",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "dist": "electron-builder --mac",
+    "pack": "electron-builder --mac --dir",
+    "doctor": "node tools/check-reminders.js"
+  },
+  "author": "Mubeen",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^32.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.mubeen.mimi",
+    "productName": "Mimi",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "extendInfo": {
+        "LSUIElement": true,
+        "NSAppleEventsUsageDescription": "Mimi reads your reminders so she can send a cat to nag you before a deadline, and marks them complete when you click the cat."
+      },
+      "identity": null
+    }
+  }
+}
