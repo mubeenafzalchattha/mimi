@@ -17,8 +17,8 @@ Apple Reminders — you cannot ignore that pending task forever now.
 - Menu bar cat + home screen both list every cat on duty so you can finish tasks from there too.
 
 
-![screenshots](home.png)
-![screenshots](mimireminder.png)
+![Screenshot](screenshots/home.png)
+![Screenshot](screenshots/mimireminder.png)
 
 ## Install
 
