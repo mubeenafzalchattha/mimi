@@ -16,6 +16,33 @@ Apple Reminders — you cannot ignore that pending task forever now.
 - Tick it off in the Reminders app and the cat notices within ~20s and leaves happily.
 - Menu bar cat + home screen both list every cat on duty so you can finish tasks from there too.
 
+## Install
+
+Mimi is **unsigned** — there's no $99/yr Apple Developer certificate behind her —
+so macOS blocks the first launch. You only do this once:
+
+1. Grab `Mimi-0.1.0-arm64-mac.zip` from
+   [Releases](https://github.com/mubeenafzalchattha/mimi/releases), unzip it, and drag
+   **Mimi** into Applications.
+2. Launch it from Applications. macOS refuses: *"Mimi can't be opened because Apple
+   cannot check it for malicious software"* (or *"is damaged"*). Click **Done**.
+3. Open **System Settings → Privacy & Security**, scroll down to **Security**. There's
+   a line saying Mimi was blocked — click **Open Anyway**, then confirm.
+4. Launch Mimi again and click **Open**. That's the last time you'll see any of this.
+5. Mimi asks for permission to control Reminders — click **OK**. Say no and she has
+   nothing to nag you about.
+
+Still stuck at step 3? macOS quarantine can be cleared directly:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Mimi.app
+```
+
+**Mimi has no Dock icon** — she lives in the menu bar. Look for the cat up top, not
+down below.
+
+Apple Silicon only for now. Intel Macs aren't supported by these builds.
+
 ## Run it
 
 ```bash
@@ -62,10 +89,27 @@ found, and how long the query took. Common answers:
 ## Build a real .app
 
 ```bash
-npm run dist        # unpacked .app in dist/mac-arm64/Mimi.app
+npm run dist        # signed .app and shareable .zip in dist/
 ```
 
-Drag it to /Applications. It's unsigned, so the first launch needs right-click → Open.
+`build/after-pack.js` ad-hoc signs the bundle on the way out. The distributable is
+`dist/Mimi-<version>-arm64-mac.zip`; do not send the raw `.app`, which can lose bundle
+metadata when transferred. This isn't notarisation —
+it only stops macOS refusing to run a bundle whose signature packing invalidated. Users
+still walk the Gatekeeper steps in [Install](#install).
+
+To share an app that opens without Apple's malware warning, it must be signed with a
+paid Apple Developer **Developer ID Application** certificate and notarized by Apple.
+An ad-hoc signature is intentionally not trusted by Gatekeeper.
+
+One consequence worth knowing: an ad-hoc signature changes on every build, so macOS sees
+each release as a different app and re-asks for Reminders permission. If a grant gets
+wedged, reset it with:
+
+```bash
+tccutil reset AppleEvents com.mubeen.mimi
+```
+
 Turn on *Start with the Mac* on the home screen and you never think about it again.
 
 ## Her voice

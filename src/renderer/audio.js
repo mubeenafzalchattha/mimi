@@ -8,7 +8,7 @@
   'use strict';
 
   const FILES = {
-    meow: ['meow-1.wav', 'meow-2.wav', 'meow-3.wav', 'meow-4.wav'],
+    meow: ['meow-1.wav', 'meow-2.wav', 'meow-3.wav', 'meow-4.wav', 'meow-5.wav'],
     chirp: ['chirp.wav'],
     purr: ['purr.wav']
   };
@@ -114,7 +114,8 @@
     loadAll();
     const u = urgency || 0;
     // when they're late they use the longer, more insistent calls
-    const name = u > 0.5 ? pick(['meow-2.wav', 'meow-4.wav', 'meow-1.wav']) : pick(FILES.meow);
+    // const name = u > 0.5 ? pick(['meow-2.wav', 'meow-4.wav', 'meow-1.wav']) : pick(FILES.meow);
+    const name = u > 0.5 ? pick(['meow-5.wav']) : pick(FILES.meow);
     const ok = playBuffer(name, {
       rate: (pitch || 1) * (0.94 + Math.random() * 0.12) * (1 + u * 0.06),
       gain: 0.55 + u * 0.25,

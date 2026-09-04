@@ -74,7 +74,7 @@ function createTray(handlers) {
     items.push({ label: 'Open Mimi…', accelerator: 'Command+O', click: handlers.onHome });
     items.push({ label: 'Summon a test cat', click: handlers.onSummon });
     items.push({ label: 'Check reminders now', click: handlers.onRefresh });
-    items.push({ label: 'Open config file…', click: handlers.onOpenConfig });
+    // items.push({ label: 'Open config file…', click: handlers.onOpenConfig });
     items.push({ type: 'separator' });
     items.push({ label: 'Quit Mimi', click: handlers.onQuit });
 

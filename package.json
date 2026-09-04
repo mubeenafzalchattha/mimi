@@ -6,18 +6,19 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "dist": "electron-builder --mac",
+    "dist": "electron-builder --mac zip",
     "pack": "electron-builder --mac --dir",
     "doctor": "node tools/check-reminders.js"
   },
   "author": "Mubeen",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^32.2.0",
+    "electron": "^32.3.3",
     "electron-builder": "^25.1.8"
   },
   "build": {
     "appId": "com.mubeen.mimi",
+    "afterPack": "build/after-pack.js",
     "productName": "Mimi",
     "files": [
       "src/**/*",
@@ -26,12 +27,6 @@
     "mac": {
       "category": "public.app-category.productivity",
       "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "arm64"
-          ]
-        },
         {
           "target": "zip",
           "arch": [
@@ -45,5 +40,8 @@
       },
       "identity": null
     }
+  },
+  "allowScripts": {
+    "electron@32.3.3": true
   }
 }

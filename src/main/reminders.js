@@ -38,6 +38,31 @@ function osa(script, timeout) {
   });
 }
 
+/* Reminders can drop the Apple event connection (-609 / -600), typically when
+   the app was cold-launched by our own event and quit again while idle. Nudge it
+   awake and try the script once more before giving up. */
+const WAKE = `
+if application "Reminders" is not running then
+	launch application "Reminders"
+	delay 1
+end if
+return "ok"
+`;
+
+function isConnectionLost(err) {
+  return /-609|-600|connection is invalid|application isn.t running/i.test(err.message || '');
+}
+
+async function osaRetry(script, timeout) {
+  try {
+    return await osa(script, timeout);
+  } catch (err) {
+    if (!isConnectionLost(err)) throw err;
+    try { await osa(WAKE, 30000); } catch (_) { /* fall through to the real retry */ }
+    return osa(script, timeout);
+  }
+}
+
 const FS = String.fromCharCode(31);
 const RS = String.fromCharCode(30);
 
@@ -130,7 +155,7 @@ return n as text
 
 /** @returns {Promise<Array<{id,title,secondsUntilDue,list,allDay}>>} */
 async function fetchDue(horizonSeconds, backstopSeconds) {
-  const raw = await osa(fetchScript(horizonSeconds, backstopSeconds), 90000);
+  const raw = await osaRetry(fetchScript(horizonSeconds, backstopSeconds), 90000);
   if (!raw) return [];
   return raw.split(RS).filter((r) => r.trim()).map((rec) => {
     const [id, title, secs, list, allday] = rec.split(FS);
@@ -145,18 +170,18 @@ async function fetchDue(horizonSeconds, backstopSeconds) {
 }
 
 async function complete(id) {
-  const res = await osa(COMPLETE(id), 60000);
+  const res = await osaRetry(COMPLETE(id), 60000);
   return res.trim() === 'ok';
 }
 
 async function listNames() {
-  const raw = await osa(LISTS, 60000);
+  const raw = await osaRetry(LISTS, 60000);
   return raw ? raw.split(FS).map((s) => s.trim()).filter(Boolean) : [];
 }
 
 /** Cheap call whose only job is to trigger (and wait for) the permission prompt. */
 async function ping() {
-  await osa(PING, 300000);
+  await osaRetry(PING, 300000);
   return true;
 }
 
