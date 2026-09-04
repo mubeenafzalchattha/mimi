@@ -16,6 +16,10 @@ Apple Reminders — you cannot ignore that pending task forever now.
 - Tick it off in the Reminders app and the cat notices within ~20s and leaves happily.
 - Menu bar cat + home screen both list every cat on duty so you can finish tasks from there too.
 
+
+![screenshots](home.png)
+![screenshots](mimireminder.png)
+
 ## Install
 
 Mimi is **unsigned** — there's no $99/yr Apple Developer certificate behind her —
